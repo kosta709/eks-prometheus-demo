@@ -3,10 +3,11 @@ locals {
   cluster_name = "eks-demo-1"
   eks_version = "1.14"
 
-  vpc_id = "vpc-0f8bf60fa684501db"
-  cluster_subnet_ids = ["subnet-0abcba65c7092a699", "subnet-069d090fd496afde8"]
+  vpc_id = "vpc-0"
+  cluster_subnet_ids = ["subnet-1", "subnet-2"]
   
-  node_subnet_ids = ["subnet-0ea74b76c14bcc51d", "subnet-0345da9eceaf3ef8c"]
+  node_subnet_ids = ["subnet-1", "subnet-2"]
+  #node_subnet_ids = ["subnet-3", "subnet-4"]
   node_group_name = "eks-demo-nodes-1"
   node_instance_type = "m5.large"
   node_max_size = 1
