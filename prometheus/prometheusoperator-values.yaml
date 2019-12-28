@@ -1,0 +1,39 @@
+logLevel: error
+
+prometheus:
+  prometheusSpec:
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: gp2
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 70Gi
+
+grafana:
+  adminPassword: "a12345"
+  persistence:
+    enabled: true
+    type: pvc
+    storageClassName: gp2
+    size: 10Gi
+
+alertmanager:
+  enabled: false
+
+kubelet:
+  serviceMonitor:
+    https: true
+## Cannot monitor controller, scheduler and etcd on eks
+kubeControllerManager:
+  enabled: false
+kubeEtcd:
+  enabled: false
+kubeScheduler:
+  enabled: false
+## kube-proxy expose metrics to 127.0.0.1 in eks - for future fix, currently disabling it
+kubeProxy:
+  enabled: false
+
+
