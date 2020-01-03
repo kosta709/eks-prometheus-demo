@@ -13,12 +13,29 @@ locals {
   node_max_size = 1
   node_min_size = 1
   spot_price = "0.1"
+
+  eks_users = ["user1", "user2"]
 }
 
 provider "aws" {
   region = local.aws_region
   version = "~> 2.0"
 }
+
+data "aws_caller_identity" "current" {}
+
+locals {
+  aws_auth = <<TPL
+  mapUsers: |
+%{ for user in local.eks_users ~}
+    - userarn: arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/${user}
+      username: ${user}
+      groups:
+        - system:masters
+%{ endfor ~}
+TPL
+}
+
 
 module "eks_cluster" {
   source  = "howdio/eks/aws//modules/cluster"
@@ -30,7 +47,7 @@ module "eks_cluster" {
   subnet_ids = local.cluster_subnet_ids
 
   cluster_private_access = true
-  # insert the 1 required variable here
+  aws_auth = local.aws_auth
 }
 
 module "eks_nodes" {
