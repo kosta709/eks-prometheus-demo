@@ -21,6 +21,8 @@ terraform apply
 ```
 
 ## Start Prometheus
+
+See [prometheus/README.md](./prometheus/) for details
 ```
 export KUBECONFIG=eks/output/eks-demo-1/kubeconfig-eks-demo-1
 prometheus/run-helm.sh
