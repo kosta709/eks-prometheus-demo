@@ -27,4 +27,19 @@ kubectl -nmonitoring port-forward svc/monitoring-grafana 3000:80
 ```
 http://localhost:3000
 
+##### Load Balancers for services
+add/uncomment the values below to prometheus/grafana/alertmanager sections of [prometheusoperator-values.yaml](./prometheusoperator-values.yaml) 
+
+
+
+```yaml
+prometheus:
+  ....
+
+  service:
+    type: LoadBalancer
+    ## For AWS Interal Load Balancing
+    annotations: 
+      service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
+```
 
